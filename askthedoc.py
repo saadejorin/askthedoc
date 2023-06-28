@@ -39,8 +39,8 @@ with st.form('myform', clear_on_submit=True):
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response = generate_response(uploaded_file, openai_api_key, query_text)
-            result.append(response)
+            result.append(result)
             del openai_api_key
 
 if len(result):
-    st.info(response)
+    st.info(result)
