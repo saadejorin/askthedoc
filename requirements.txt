@@ -5,4 +5,5 @@ chromadb
 tiktoken
 pytesseract
 pdfplumber
+python-docx
 
