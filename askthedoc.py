@@ -39,11 +39,11 @@ def generate_response(uploaded_file, openai_api_key, query_text):
         # Create QA chain
         qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=openai_api_key), chain_type='stuff', retriever=retriever)
         
-        return qa.run(query_text)[:1]  # Limit to 1 result
+        return qa.run(query_text, n_results=4)[:1]  # Limit to 1 result
 
 # Page title
-st.set_page_config(page_title='🦜🔗 Ask the Doc by Sam')
-st.title('🦜🔗 Ask the Doc by Sam')
+st.set_page_config(page_title='🦜🔗 Ask the Doc App')
+st.title('🦜🔗 Ask the Doc App')
 
 # File upload
 uploaded_file = st.file_uploader('Upload an article', type=['pdf', 'doc', 'docx', 'txt'])
@@ -58,7 +58,8 @@ with st.form('myform', clear_on_submit=True):
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response = generate_response(uploaded_file, openai_api_key, query_text)
-            result.append(response)
+            if response:
+                result.append(response[0])
 
 if len(result):
-    st.info(result[0][0])
+    st.info(result[0])
