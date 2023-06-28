@@ -39,7 +39,7 @@ def generate_response(uploaded_file, openai_api_key, query_text):
         # Create QA chain
         qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=openai_api_key), chain_type='stuff', retriever=retriever)
         
-        return qa.run(query_text)
+        return qa.run(query_text, n_results=1)  # Limit to 1 result
 
 # Page title
 st.set_page_config(page_title='🦜🔗 Ask the Doc by Sam')
