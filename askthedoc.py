@@ -33,8 +33,8 @@ def generate_full_response(document_text, query_text):
     return " ".join(responses)
 
 # Page title
-st.set_page_config(page_title='🦜🔗 Ask the Doc by Sam')
-st.title('🦜🔗 Ask the Doc Sam')
+st.set_page_config(page_title='🦜🔗 Ask the Doc App')
+st.title('🦜🔗 Ask the Doc App')
 
 # File upload
 uploaded_file = st.file_uploader('Upload a document', type=['pdf', 'doc', 'docx', 'txt'])
@@ -48,11 +48,12 @@ with st.form('myform', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and uploaded_file is not None and query_text:
         document_text = ""
-        if uploaded_file.type == 'pdf':
+        file_extension = uploaded_file.name.split(".")[-1]
+        if file_extension == "pdf":
             with pdfplumber.open(uploaded_file) as pdf:
                 for page in pdf.pages:
                     document_text += page.extract_text()
-        elif uploaded_file.type in ['doc', 'docx', 'txt']:
+        elif file_extension in ["doc", "docx", "txt"]:
             document_text = uploaded_file.read().decode()
         else:
             st.error('Unsupported file format. Please upload a PDF, DOC, DOCX, or TXT file.')
