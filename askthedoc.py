@@ -13,8 +13,8 @@ def generate_response(document_text, query_text):
     return response.choices[0].text.strip()
 
 # Page title
-st.set_page_config(page_title='🦜🔗 Ask the Doc App')
-st.title('🦜🔗 Ask the Doc App')
+st.set_page_config(page_title='🦜🔗 Ask the Doc by Sam')
+st.title('🦜🔗 Ask the Doc by Sam')
 
 # File upload
 uploaded_file = st.file_uploader('Upload an article', type=['pdf', 'doc', 'docx', 'txt'])
