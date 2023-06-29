@@ -1,9 +1,10 @@
 import streamlit as st
+import os
 import openai
 import pdfplumber
 
 # Initialize OpenAI API client
-openai.api_key = "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"
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 # Function to generate response using OpenAI GPT-4
 def generate_response(document_text, query_text):
@@ -23,7 +24,6 @@ query_text = st.text_input('Enter your question:', placeholder='Please provide a
 # Form input and query
 result = []
 with st.form('myform', clear_on_submit=True):
-    # Remove the OpenAI API key input field
     submitted = st.form_submit_button('Submit', disabled=uploaded_file is None)
     if submitted:
         with st.spinner('Calculating...'):
