@@ -1,5 +1,6 @@
 import streamlit as st
 import openai
+import pdfplumber
 
 # Initialize OpenAI API client
 openai.api_key = "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"
