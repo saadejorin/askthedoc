@@ -59,10 +59,12 @@ with st.form('myform', clear_on_submit=True):
         with st.spinner('Calculating...'):
             response = generate_response(uploaded_file, openai_api_key, query_text)
             if response:
-                result.extend(response[:1])  # Limit to 1 result
+                if len(response) >= 1:
+                    result.extend(response[:1])
+                else:
+                    st.warning("No results found.")
             else:
-                st.warning("No results found.")
-            del openai_api_key
+                st.warning("Error occurred while generating the response.")
 
 if result:
     st.info(result[0])
