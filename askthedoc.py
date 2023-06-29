@@ -24,8 +24,8 @@ def generate_response(chunk, query_text):
     return response.choices[0].text.strip()
 
 # Function to generate response for the entire document
-def generate_full_response(document_text, query_text):
-    chunks = split_document(document_text)
+def generate_full_response(document_text, query_text, chunk_size=4096):
+    chunks = split_document(document_text, chunk_size)
     responses = []
     for chunk in chunks:
         response = generate_response(chunk, query_text)
@@ -41,6 +41,9 @@ uploaded_file = st.file_uploader('Upload a document', type=['pdf', 'doc', 'docx'
 
 # Query text
 query_text = st.text_input('Enter your question:', placeholder='Please provide a short summary.')
+
+# Chunk size input
+chunk_size = st.number_input('Chunk Size', min_value=1024, max_value=8192, value=4096, step=1024)
 
 # Form input and query
 result = []
@@ -59,7 +62,7 @@ with st.form('myform', clear_on_submit=True):
             st.error('Unsupported file format. Please upload a PDF, DOC, DOCX, or TXT file.')
         if document_text:
             with st.spinner('Processing...'):
-                response = generate_full_response(document_text, query_text)
+                response = generate_full_response(document_text, query_text, chunk_size)
                 result.append(response)
 
 if len(result) > 0:
