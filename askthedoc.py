@@ -54,6 +54,9 @@ query_text = st.text_input('Enter your question:', placeholder='Please provide a
 # Rest of the code ...
 
 # Form input and query
+# Rest of the code ...
+
+# Form input and query
 result = []
 with st.form('myform', clear_on_submit=True):
     openai_api_key = st.text_input('OpenAI API Key', type='password', disabled=uploaded_file is None)
