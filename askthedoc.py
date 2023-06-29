@@ -48,7 +48,7 @@ st.title('🦜🔗 Ask the Doc App')
 # File upload
 uploaded_file = st.file_uploader('Upload an article', type=['pdf', 'doc', 'docx', 'txt'])
 # Query text
-query_text = st.text_input('Enter your question:', placeholder='Please provide a short summary.', disabled=uploaded_file is None)
+query_text = st.text_input('Enter your question:', placeholder='Please provide a short summary.', key='query_text', disabled=uploaded_file is None)
 
 # Form input and query
 result = []
