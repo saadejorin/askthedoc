@@ -20,14 +20,8 @@ def split_document(document_text, chunk_size=4096):
 # Function to generate response for a single chunk
 def generate_response(chunk, query_text):
     prompt = f"Document:\n{chunk}\n\nQuestion: {query_text}\nAnswer:"
-    response = openai.ChatCompletion.create(
-        model="gpt-4.0-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt},
-        ],
-    )
-    return response.choices[0].message.content.strip()
+    response = openai.Completion.create(engine="text-davinci-003", prompt=prompt, max_tokens=100)
+    return response.choices[0].text.strip()
 
 # Function to generate response for the entire document
 def generate_full_response(document_text, query_text):
