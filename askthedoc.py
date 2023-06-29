@@ -1,13 +1,13 @@
 import streamlit as st
-from openai import OpenAIApi
+import openai
 
 # Initialize OpenAI API client
-openai_api = OpenAIApi(api_key="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")
+openai.api_key = "YOUR_OPENAI_API_KEY"
 
 # Function to generate response using OpenAI GPT-4
 def generate_response(document_text, query_text):
     prompt = f"Document:\n{document_text}\n\nQuestion: {query_text}\nAnswer:"
-    response = openai_api.complete(prompt, max_tokens=100)
+    response = openai.Completion.create(engine="text-davinci-003", prompt=prompt, max_tokens=100)
     return response.choices[0].text.strip()
 
 # Page title
