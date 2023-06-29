@@ -3,7 +3,7 @@ import openai
 import pdfplumber
 
 # Initialize OpenAI API client
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Function to generate response using OpenAI GPT-4
 def generate_response(document_text, query_text):
@@ -23,9 +23,9 @@ query_text = st.text_input('Enter your question:', placeholder='Please provide a
 # Form input and query
 result = []
 with st.form('myform', clear_on_submit=True):
-    openai_api_key = st.text_input('OpenAI API Key', type='password', disabled=uploaded_file is None)
+    # Remove the OpenAI API key input field
     submitted = st.form_submit_button('Submit', disabled=uploaded_file is None)
-    if submitted and openai_api_key.startswith('sk-'):
+    if submitted:
         with st.spinner('Calculating...'):
             if uploaded_file is not None:
                 file_extension = uploaded_file.name.split(".")[-1]
@@ -45,7 +45,6 @@ with st.form('myform', clear_on_submit=True):
 
             response = generate_response(document_text, query_text)
             result.append(response)
-            del openai_api_key
 
 if len(result):
     st.info(result[0])
