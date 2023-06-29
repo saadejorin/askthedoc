@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 
 # Initialize OpenAI API client
-openai.api_key = "YOUR_OPENAI_API_KEY"
+openai.api_key = "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"
 
 # Function to generate response using OpenAI GPT-4
 def generate_response(document_text, query_text):
