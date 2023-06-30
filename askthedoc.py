@@ -80,4 +80,8 @@ if len(result) > 0:
 
 if convert_to_audio and len(result) > 0:
     audio = text_to_speech(result[0])
-    st.audio(audio)
+    st.audio(audio, format='audio/ogg', start_time=0)
+
+    # Download audio link
+    audio_name = "audio.ogg"
+    st.markdown(f'<a href="data:audio/ogg;base64,{audio}" download="{audio_name}">Download Audio</a>', unsafe_allow_html=True)
