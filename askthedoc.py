@@ -36,7 +36,7 @@ def generate_full_response(document_text, query_text):
 
 # Function to convert text to audio
 def text_to_speech(text):
-    tts = gTTS(text)
+    tts = gTTS(text, slow=False)
     audio = io.BytesIO()
     tts.save(audio)
     audio.seek(0)
