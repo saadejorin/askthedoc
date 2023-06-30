@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <style>
+        /* Add your custom CSS styles here */
+        /* Example styles */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .user {
+            text-align: right;
+            color: #0066cc;
+        }
+        .bot {
+            text-align: left;
+            color: #009900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chatbot Interface</h1>
+        <div id="chat-container">
+            <div id="chat-history"></div>
+        </div>
+        <form id="chat-form" action="/chat" method="POST" enctype="multipart/form-data">
+            <input type="text" name="query_text" id="query-text" placeholder="Type your query...">
+            <input type="file" name="document" id="document-upload" accept=".pdf,.doc,.docx,.txt">
+            <button type="submit" id="submit-button">Send</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to create and append a message element to the chat history
+        function appendMessage(text, className) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message");
+            messageElement.classList.add(className);
+            messageElement.innerText = text;
+            document.getElementById("chat-history").appendChild(messageElement);
+        }
+
+        // Function to handle form submission and update chat history
+        function handleSubmit(event) {
+            event.preventDefault();
+            const queryText = document.getElementById("query-text").value;
+            const formData = new FormData(document.getElementById("chat-form"));
+
+            fetch("/chat", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const userQuery = data.query_text;
+                const botResponse = data.response;
+
+                appendMessage(userQuery, "user");
+                appendMessage(botResponse, "bot");
+
+                // Clear the input field
+                document.getElementById("query-text").value = "";
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        // Add event listener to form submission
+        document.getElementById("chat-form").addEventListener("submit", handleSubmit);
+    </script>
+</body>
+</html>
