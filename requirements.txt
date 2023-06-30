@@ -6,4 +6,5 @@ tiktoken
 pytesseract
 pdfplumber
 python-docx
+gtts
 
