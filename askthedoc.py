@@ -3,7 +3,7 @@ import os
 import openai
 import pdfplumber
 from gtts import gTTS
-from io import BytesIO
+import io
 
 # Initialize OpenAI API client
 openai.api_key = os.environ.get("OPENAI_API_KEY")
@@ -36,10 +36,11 @@ def generate_full_response(document_text, query_text):
 
 # Function to convert text to audio
 def text_to_speech(text):
-    tts = gTTS(text=text, lang="en")
-    audio_bytes = BytesIO()
-    tts.save(audio_bytes)
-    return audio_bytes.getvalue()
+    tts = gTTS(text)
+    audio = io.BytesIO()
+    tts.save(audio)
+    audio.seek(0)
+    return audio
 
 # Page title
 st.set_page_config(page_title='🦜🔗 Ask the Doc by Sam')
@@ -51,8 +52,8 @@ uploaded_file = st.file_uploader('Upload a document', type=['pdf', 'doc', 'docx'
 # Query text
 query_text = st.text_input('Enter your question:', placeholder='Please provide a short summary.')
 
-# Audio output option
-convert_to_audio = st.checkbox('Convert to Audio')
+# Convert to audio checkbox
+convert_to_audio = st.checkbox('Convert to audio')
 
 # Form input and query
 result = []
@@ -75,8 +76,8 @@ with st.form('myform', clear_on_submit=True):
                 result.append(response)
 
 if len(result) > 0:
-    if convert_to_audio:
-        audio_data = text_to_speech(result[0])
-        st.audio(audio_data, format='audio/mp3')
-    else:
-        st.info(result[0])
+    st.info(result[0])
+
+if convert_to_audio and len(result) > 0:
+    audio = text_to_speech(result[0])
+    st.audio(audio)
